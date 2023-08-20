@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import LettersBoard from "./components/LettersBoard";
+import GuessedLetters from "./components/GuessedLetters";
+import hangmanWords from "./words/words.json";
 
-function App() {
+const App: React.FC = () => {
+  const randomHangmanWord =
+    hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
+
+  const [chosenLetter, setChosenLetter] = useState<string>("");
+  const [chosenLetters, setChosenLetters] = useState<string[]>([]);
+  const [word, setWord] = useState<string>(randomHangmanWord);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <LettersBoard
+        chosenLetters={chosenLetters}
+        setChosenLetters={setChosenLetters}
+        chosenLetter={chosenLetter}
+        setChosenLetter={setChosenLetter}
+      />
+      <GuessedLetters word={word} chosenLetter={chosenLetter} />
     </div>
   );
-}
+};
 
 export default App;
